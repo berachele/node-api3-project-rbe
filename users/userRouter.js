@@ -8,14 +8,20 @@ const validateUserId = require('../middleware/validateUserId')
 
 router.post('/', validateUser(), (req, res, next) => {
   // do your magic!
+  
 });
 
 router.post('/:id/posts', validateUser(), validateUserId(), validatePost(), (req, res, next) => {
   // do your magic!
 });
 
-router.get('/', validateUser(), (req, res, next) => {
+router.get('/', (req, res, next) => {
   // do your magic!
+  Users.get()
+  .then(user => {
+    res.status(200).json(user)
+  })
+  .catch(next)
 });
 
 router.get('/:id', validateUser(), validateUserId(), (req, res, next) => {

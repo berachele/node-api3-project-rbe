@@ -16,8 +16,8 @@ server.get('/', (req, res) => {
 })
 
 //bringing in url to connect to routes
-server.use('/api/posts', postRouter)
 server.use('/api/users', userRouter)
+server.use('/api/posts', postRouter)
 
 //error middleware
 server.use((err, req, res, next) => {
