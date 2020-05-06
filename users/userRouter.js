@@ -1,13 +1,14 @@
 const express = require('express');
 const router = express.Router();
 Users = require('./userDb')
+Posts = require('../posts/postDb')
 //bringing in middlewares
 const validatePost = require('../middleware/validatePost')
 const validateUser = require('../middleware/validateUser')
 const validateUserId = require('../middleware/validateUserId')
 
 
-router.post('/', validateUser(), (req, res, next) => {
+router.post('/', (req, res, next) => {
   // do your magic!
   const newUser = req.body
   Users.insert(newUser)
@@ -23,9 +24,21 @@ router.post('/', validateUser(), (req, res, next) => {
 }); 
 //🥳🥳
 
-router.post('/:id/posts', validateUser(), validateUserId(), validatePost(), (req, res, next) => {
+router.post('/:id/posts', (req, res, next) => {
   // do your magic!
-
+  const id = req.params.id
+  const newComment = req.body
+  console.log({newComment})
+  Posts.insert(newComment)
+  .then(comment => {
+    if(comment){
+      Users.getUserPosts(id)
+      .then(success => {
+        res.status(201).json(success)
+      })
+    }
+  })
+  .catch(next)
 });
 
 router.get('/', (req, res, next) => {
@@ -49,16 +62,14 @@ router.get('/:id', validateUserId(), (req, res, next) => {
 }); 
 //🥳
 
-router.get('/:id/posts', validateUserId(), (req, res, next) => { //add in validatePost later once can figure how to show posts
+router.get('/:id/posts', validateUserId(), validatePost(), (req, res, next) => { 
   // do your magic!
   const id = req.params.id
   Users.getById(id)
   .then(user => {
     if(user){
-      console.log({user})
       Users.getUserPosts(id)
       .then(success => {
-        console.log({success})
         res.status(200).json(success)
       })
     }
