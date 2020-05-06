@@ -30,7 +30,6 @@ router.delete('/:id', validatePostId(), (req, res, next) => {
   const id = req.params.id
   Posts.remove(id)
   .then(post => {
-    console.log({post})
     if(post === 1){
       Posts.get()
       .then(success => {
@@ -43,6 +42,18 @@ router.delete('/:id', validatePostId(), (req, res, next) => {
 
 router.put('/:id', validatePostId(), (req, res, next) => {
   // do your magic!
+  const id = req.params.id
+  Posts.update(id, req.body)
+  .then(post => {
+    console.log({post})
+    if(post === 1){
+      Posts.get()
+      .then(success => {
+        res.status(200).json(success)
+      })
+    }
+  })
+  .catch(next)
 });
 
 
