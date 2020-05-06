@@ -8,7 +8,7 @@ router.post('/', validateUser(), (req, res) => {
   // do your magic!
 });
 
-router.post('/:id/posts', validateUser(), validateUserId(), (req, res) => {
+router.post('/:id/posts', validateUser(), validateUserId(), validatePost(), (req, res) => {
   // do your magic!
 });
 
@@ -20,7 +20,7 @@ router.get('/:id', validateUser(), validateUserId(), (req, res) => {
   // do your magic!
 });
 
-router.get('/:id/posts', validateUser(), validateUserId(), (req, res) => {
+router.get('/:id/posts', validateUser(), validateUserId(), validatePost(), (req, res) => {
   // do your magic!
 });
 
@@ -74,6 +74,18 @@ function validateUser(req, res, next) {
 
 function validatePost(req, res, next) {
   // do your magic!
+  const post = req.body
+  if(!post){
+    res.status(400).json({
+      message: "Missing post data"
+    })
+  }else if(!post.text){
+    res.status(400).json({
+      message: "Missing required text field"
+    })
+  } else {
+    next()
+  }
 }
 
 module.exports = router;
