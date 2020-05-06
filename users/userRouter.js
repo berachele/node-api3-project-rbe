@@ -20,7 +20,7 @@ router.post('/', validateUser(), (req, res, next) => {
   })
   .catch(next)
 }); 
-//🥳
+//🥳🥳
 
 router.post('/:id/posts', validateUser(), validateUserId(), validatePost(), (req, res, next) => {
   // do your magic!
@@ -63,10 +63,16 @@ router.delete('/:id', validateUser(), validateUserId(), (req, res, next) => {
   id = req.params.id
   Users.remove(id)
   .then(user => {
-    res.status(200).json(user)
+    if(user === 1){
+      Users.get()
+      .then(success => {
+        res.status(200).json(success)
+      })
+    }
   })
   .catch(next)
 });
+//🥳
 
 router.put('/:id', validateUser(), validateUserId(), (req, res, next) => {
   // do your magic!
