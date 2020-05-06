@@ -24,8 +24,14 @@ router.get('/', (req, res, next) => {
   .catch(next)
 });
 
-router.get('/:id', validateUser(), validateUserId(), (req, res, next) => {
+router.get('/:id', validateUserId(), (req, res, next) => {
   // do your magic!
+  const id = req.params.id
+  Users.getById(id)
+  .then(user => {
+    res.status(200).json(user)
+  })
+  .catch(next)
 });
 
 router.get('/:id/posts', validateUser(), validateUserId(), validatePost(), (req, res, next) => {
