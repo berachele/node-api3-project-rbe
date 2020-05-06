@@ -1,12 +1,12 @@
 const express = require('express');
-
 const router = express.Router();
 
-const Posts = require('./postDb')
+const validatePost = require('../middleware/validatePost')
+const validatePostId = require('../middleware/validatePostId')
 
 //is there a way to bring in validatePost for the first get request??
 
-router.get('/', (req, res) => {
+router.get('/', validatePost(), (req, res) => {
   // do your magic!
 });
 
@@ -22,22 +22,5 @@ router.put('/:id', validatePostId(), (req, res, next) => {
   // do your magic!
 });
 
-// custom middleware
-
-function validatePostId(req, res, next) {
-  // do your magic!
-  Posts.getById(req.params.id)
-  .then(post => {
-    if(post){
-      req.post = post
-      next()
-    }else {
-      res.status(400).json({
-        message: "Invalid post ID"
-      })
-    }
-  })
-  .catch(next)
-}
 
 module.exports = router;
