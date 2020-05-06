@@ -1,7 +1,6 @@
 const express = require('express');
 const router = express.Router();
 Users = require('./userDb')
-
 //bringing in middlewares
 const validatePost = require('../middleware/validatePost')
 const validateUser = require('../middleware/validateUser')
