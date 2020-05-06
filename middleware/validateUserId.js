@@ -1,6 +1,6 @@
 const express = require('express');
 const server = express();
-Users = require('./userDb')
+Users = require('../users/userDb')
 
 module.exports = () => {
     return(req, res, next) => {

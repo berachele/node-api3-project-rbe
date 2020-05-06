@@ -1,6 +1,6 @@
 const express = require('express')
 server = express()
-const Posts = require('./postDb')
+const Posts = require('../posts/postDb')
 
 module.exports = () => {
     return(req, res, next) => {
