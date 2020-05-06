@@ -6,6 +6,7 @@ const validatePost = require('../middleware/validatePost')
 const validateUser = require('../middleware/validateUser')
 const validateUserId = require('../middleware/validateUserId')
 
+
 router.post('/', validateUser(), (req, res, next) => {
   // do your magic!
   const newUser = req.body
@@ -24,6 +25,7 @@ router.post('/', validateUser(), (req, res, next) => {
 
 router.post('/:id/posts', validateUser(), validateUserId(), validatePost(), (req, res, next) => {
   // do your magic!
+
 });
 
 router.get('/', (req, res, next) => {
@@ -47,16 +49,23 @@ router.get('/:id', validateUserId(), (req, res, next) => {
 }); 
 //🥳
 
-router.get('/:id/posts', validateUserId(), (req, res, next) => {
+router.get('/:id/posts', validateUserId(), (req, res, next) => { //add in validatePost later once can figure how to show posts
   // do your magic!
   const id = req.params.id
   Users.getById(id)
   .then(user => {
-    res.status(200).json(user)
+    if(user){
+      console.log({user})
+      Users.getUserPosts(id)
+      .then(success => {
+        console.log({success})
+        res.status(200).json(success)
+      })
+    }
   })
   .catch(next)
 });
-//Not fully functioning, only returning the actual user--wonder if I need to do a filter function to show only the posts from that user_id
+//🥳
 
 router.delete('/:id', validateUser(), validateUserId(), (req, res, next) => {
   // do your magic!
@@ -88,6 +97,6 @@ router.put('/:id', validateUser(), validateUserId(), (req, res, next) => {
   })
   .catch(next)
 });
-
+//🥳
 
 module.exports = router;
