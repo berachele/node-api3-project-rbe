@@ -28,7 +28,6 @@ router.post('/:id/posts', (req, res, next) => {
   // do your magic!
   const id = req.params.id
   const newComment = req.body
-  console.log({newComment})
   Posts.insert(newComment)
   .then(comment => {
     if(comment){
@@ -40,6 +39,7 @@ router.post('/:id/posts', (req, res, next) => {
   })
   .catch(next)
 });
+//🥳
 
 router.get('/', (req, res, next) => {
   // do your magic!
