@@ -4,31 +4,31 @@ const router = express.Router();
 
 Users = require('./userDb')
 
-router.post('/', (req, res) => {
+router.post('/', validateUser(), (req, res) => {
   // do your magic!
 });
 
-router.post('/:id/posts', validateUserId(), (req, res) => {
+router.post('/:id/posts', validateUser(), validateUserId(), (req, res) => {
   // do your magic!
 });
 
-router.get('/', (req, res) => {
+router.get('/', validateUser(), (req, res) => {
   // do your magic!
 });
 
-router.get('/:id', validateUserId(), (req, res) => {
+router.get('/:id', validateUser(), validateUserId(), (req, res) => {
   // do your magic!
 });
 
-router.get('/:id/posts', validateUserId(), (req, res) => {
+router.get('/:id/posts', validateUser(), validateUserId(), (req, res) => {
   // do your magic!
 });
 
-router.delete('/:id', validateUserId(), (req, res) => {
+router.delete('/:id', validateUser(), validateUserId(), (req, res) => {
   // do your magic!
 });
 
-router.put('/:id', validateUserId(), (req, res) => {
+router.put('/:id', validateUser(), validateUserId(), (req, res) => {
   // do your magic!
 
 });
@@ -58,6 +58,18 @@ function validateUserId(req, res, next) {
 
 function validateUser(req, res, next) {
   // do your magic!
+  const user = req.body
+  if(!user){
+    res.status(400).json({
+      message: "Missing user data"
+    })
+  }else if(!user.name){
+    res.status(400).json({
+      message: "Missing required name field"
+    })
+  }else {
+    next()
+  }
 }
 
 function validatePost(req, res, next) {
