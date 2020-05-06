@@ -76,7 +76,17 @@ router.delete('/:id', validateUser(), validateUserId(), (req, res, next) => {
 
 router.put('/:id', validateUser(), validateUserId(), (req, res, next) => {
   // do your magic!
-
+  const id = req.params.id
+  Users.update(id, req.body)
+  .then(user => {
+    if(user === 1){
+      Users.get()
+      .then(success => {
+        res.status(200).json(success)
+      })
+    }
+  })
+  .catch(next)
 });
 
 
