@@ -7,7 +7,7 @@ module.exports = () =>
     {return (req, res, next) => {
         const method = req.method
         const url = req.originalUrl
-        const timeStamp = Date.now()
+        const timeStamp = Date().toISOString()
 
         console.log(`${method} ${url} ${timeStamp}`)
 

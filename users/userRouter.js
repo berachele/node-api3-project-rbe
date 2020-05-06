@@ -4,31 +4,31 @@ const router = express.Router();
 
 Users = require('./userDb')
 
-router.post('/', validateUser(), (req, res) => {
+router.post('/', validateUser(), (req, res, next) => {
   // do your magic!
 });
 
-router.post('/:id/posts', validateUser(), validateUserId(), validatePost(), (req, res) => {
+router.post('/:id/posts', validateUser(), validateUserId(), validatePost(), (req, res, next) => {
   // do your magic!
 });
 
-router.get('/', validateUser(), (req, res) => {
+router.get('/', validateUser(), (req, res, next) => {
   // do your magic!
 });
 
-router.get('/:id', validateUser(), validateUserId(), (req, res) => {
+router.get('/:id', validateUser(), validateUserId(), (req, res, next) => {
   // do your magic!
 });
 
-router.get('/:id/posts', validateUser(), validateUserId(), validatePost(), (req, res) => {
+router.get('/:id/posts', validateUser(), validateUserId(), validatePost(), (req, res, next) => {
   // do your magic!
 });
 
-router.delete('/:id', validateUser(), validateUserId(), (req, res) => {
+router.delete('/:id', validateUser(), validateUserId(), (req, res, next) => {
   // do your magic!
 });
 
-router.put('/:id', validateUser(), validateUserId(), (req, res) => {
+router.put('/:id', validateUser(), validateUserId(), (req, res, next) => {
   // do your magic!
 
 });
@@ -48,12 +48,7 @@ function validateUserId(req, res, next) {
       })
     }
   })
-  .catch(err => {
-    console.log({err})
-    res.status(500).json({
-      error: "There was an error retrieving this user"
-    })
-  })
+  .catch(next)
 }
 
 function validateUser(req, res, next) {
