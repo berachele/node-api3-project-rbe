@@ -24,7 +24,7 @@ router.post('/', (req, res, next) => {
 }); 
 //🥳🥳
 
-router.post('/:id/posts', (req, res, next) => {
+router.post('/:id/posts', validatePost(), (req, res, next) => {
   // do your magic!
   const id = req.params.id
   const newComment = req.body
